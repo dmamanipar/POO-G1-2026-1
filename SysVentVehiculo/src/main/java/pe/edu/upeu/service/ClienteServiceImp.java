@@ -7,7 +7,15 @@ import java.util.List;
 
 public class ClienteServiceImp implements ClienteServiceInter{
 
-    ClienteRepository cr=new ClienteRepository();
+    ClienteRepository cr=ClienteRepository.getInstance();
+
+    private static ClienteServiceInter intance=new ClienteServiceImp();
+    public static ClienteServiceInter getIntance(){
+        if(intance==null){
+            intance=new ClienteServiceImp();
+        }
+        return intance;
+    }
 
     @Override
     public void save(Cliente c) {
