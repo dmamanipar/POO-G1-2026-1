@@ -57,16 +57,16 @@
                               <Label text="Nombres:" GridPane.rowIndex="2" />
                               <Label text="Telefono:" GridPane.rowIndex="3" />
                               <Label text="Correo:" GridPane.rowIndex="4" />
-                              <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+                              <TextField fx:id="txtDni" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtNombre" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtTelefono" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                              <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
                               <Button mnemonicParsing="false" text="Buscar" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Guardar" GridPane.rowIndex="5">
+                              <Button fx:id="btnGuardar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Guardar" GridPane.rowIndex="5">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
@@ -75,7 +75,7 @@
                                     <String fx:value="btn" />
                                  </styleClass>
                               </Button>
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Actualizar" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                              <Button fx:id="btnActualizar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Actualizar" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <GridPane.margin>
                                     <Insets left="5.0" right="5.0" />
                                  </GridPane.margin>
@@ -84,7 +84,7 @@
                                     <String fx:value="btn-success" />
                                  </styleClass>
                               </Button>
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Limpiar" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                              <Button fx:id="btnLimpiar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Limpiar" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                  <GridPane.margin>
                                     <Insets left="5.0" right="5.0" />
                                  </GridPane.margin>
@@ -93,7 +93,7 @@
                                     <String fx:value="btn-warning" />
                                  </styleClass>
                               </Button>
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Eliminar" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                              <Button fx:id="btnEliminar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" GridPane.columnIndex="3" GridPane.rowIndex="5">
                                  <GridPane.margin>
                                     <Insets left="5.0" right="5.0" />
                                  </GridPane.margin>
@@ -104,7 +104,7 @@
                               </Button>
                            </children>
                         </GridPane>
-                        <TableView>
+                        <TableView fx:id="tableRegCliente">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>

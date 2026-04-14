@@ -24,6 +24,9 @@ public class ClienteServiceImp implements ClienteServiceInter{
 
     @Override
     public List<Cliente> findAll() {
+        if(cr.listarClientes().isEmpty()){
+            cr.datosPrederminados();
+        }
         return cr.listarClientes();
     }
 
