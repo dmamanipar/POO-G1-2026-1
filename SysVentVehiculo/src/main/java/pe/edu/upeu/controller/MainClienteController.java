@@ -3,12 +3,11 @@ package pe.edu.upeu.controller;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import pe.edu.upeu.model.Cliente;
 import pe.edu.upeu.service.ClienteServiceImp;
 import pe.edu.upeu.service.ClienteServiceInter;
@@ -23,19 +22,24 @@ public class MainClienteController {
     ObservableList<Cliente> clientes;
     private TableColumn<Cliente, String> colIdDni, colNombre, colTelefono, colEmail;
 
-    @FXML private TextField txtDni, txtNombre, txtTelefono, txtEmail;
+    @FXML private TextField txtDni, txtNombre, txtTelefono, txtEmail, txtBuscar;
     @FXML private Button btnGuardar, btnActualizar, btnLimpiar, btnEliminar;
     int index=-1;
+
+    FilteredList<Cliente> filteredData;
     @FXML
     public void initialize(){
         definirColumnas();
         listar();
+        botonDesactivar(true);
         agregarEventoSeleccion();
         btnActualizar.setOnAction(event->{
             guardar();
             index=-1;
             limpiar();
             listar();
+            botonDesactivar(true);
+            btnGuardar.setDisable(false);
         });
         btnGuardar.setOnAction(e->{
             guardar();
@@ -43,6 +47,46 @@ public class MainClienteController {
             limpiar();
             listar();
         });
+        btnLimpiar.setOnAction(e->{
+            limpiar();
+            index=-1;
+            botonDesactivar(true);
+            btnGuardar.setDisable(false);
+        });
+        filtrarDatos();
+    }
+
+    void filtrarDatos(){
+        filteredData=filteredData = new FilteredList<>(clientes, p -> true);
+        // 2. Set the filter Predicate whenever the filter changes.
+        txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(person -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (person.getNombre().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (person.getId().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }
+                return false; // Does not match.
+            });
+        });
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Cliente> sortedData = new SortedList<>(filteredData);
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(tableRegCliente.comparatorProperty());
+        // 5. Add sorted (and filtered) data to the table.
+        tableRegCliente.setItems(sortedData);
+    }
+
+    void botonDesactivar(boolean estado){
+        btnActualizar.setDisable(estado);
+        btnEliminar.setDisable(estado);
     }
 
     @FXML
@@ -52,6 +96,8 @@ public class MainClienteController {
             index=-1;
             limpiar();
             listar();
+            botonDesactivar(true);
+            btnGuardar.setDisable(false);
         }
     }
 
@@ -60,6 +106,7 @@ public class MainClienteController {
         txtNombre.setText("");
         txtTelefono.setText("");
         txtEmail.setText("");
+        tableRegCliente.getSelectionModel().clearSelection();
     }
 
     void guardar(){
@@ -71,12 +118,18 @@ public class MainClienteController {
         if(index==-1 && !c.getId().isEmpty()){
            cs.save(c);
         }else{
-            cs.update(c, index);
+            if(index==-1){
+                System.out.println("sdsdsd");
+                Alert a=new Alert(Alert.AlertType.NONE);
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.show();
+            }else{
+                cs.update(c, index);
+            }
+
+
         }
     }
-
-
-
     public void agregarEventoSeleccion(){
         tableRegCliente.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue)->{
@@ -86,10 +139,11 @@ public class MainClienteController {
                         txtNombre.setText(newValue.getNombre());
                         txtEmail.setText(newValue.getEmail());
                         txtTelefono.setText(newValue.getTelefono());
+                        botonDesactivar(false);
+                        btnGuardar.setDisable(true);
                     }
                 });
     }
-
 
     public void definirColumnas(){
         colIdDni=new TableColumn<>("DNI");
