@@ -8,5 +8,5 @@ public interface ClienteServiceInter {
     void save(Cliente c);
     List<Cliente> findAll();
     void update(Cliente c, int index);
-    void delete(int index);
+    void delete(String index);
 }

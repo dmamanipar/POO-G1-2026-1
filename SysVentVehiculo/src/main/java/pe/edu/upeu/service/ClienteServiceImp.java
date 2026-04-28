@@ -24,9 +24,9 @@ public class ClienteServiceImp implements ClienteServiceInter{
 
     @Override
     public List<Cliente> findAll() {
-        if(cr.listarClientes().isEmpty()){
+        /*if(cr.listarClientes().isEmpty()){
             cr.datosPrederminados();
-        }
+        }*/
         return cr.listarClientes();
     }
 
@@ -36,7 +36,7 @@ public class ClienteServiceImp implements ClienteServiceInter{
     }
 
     @Override
-    public void delete(int index) {
+    public void delete(String index) {
         cr.eliminarCliente(index);
     }
 }

@@ -25,6 +25,7 @@ public class MainClienteController {
     @FXML private TextField txtDni, txtNombre, txtTelefono, txtEmail, txtBuscar;
     @FXML private Button btnGuardar, btnActualizar, btnLimpiar, btnEliminar;
     int index=-1;
+    String dni="";
 
     FilteredList<Cliente> filteredData;
     @FXML
@@ -91,8 +92,8 @@ public class MainClienteController {
 
     @FXML
     void eliminar(ActionEvent e){
-        if(index!=-1){
-            cs.delete(index);
+        if(!dni.isEmpty()){
+            cs.delete(dni);
             index=-1;
             limpiar();
             listar();
@@ -135,6 +136,7 @@ public class MainClienteController {
                 .addListener((observable, oldValue, newValue)->{
                     if(newValue!=null){
                         index=tableRegCliente.getItems().indexOf(newValue);
+                        dni=newValue.getId();
                         txtDni.setText(newValue.getId());
                         txtNombre.setText(newValue.getNombre());
                         txtEmail.setText(newValue.getEmail());

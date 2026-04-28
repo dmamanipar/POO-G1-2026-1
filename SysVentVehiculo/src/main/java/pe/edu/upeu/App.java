@@ -7,9 +7,27 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+import pe.edu.upeu.conn.SQLiteConnection;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class App extends Application {
     public static void main( String[] args ) {
+        /*Connection con=
+                SQLiteConnection.getInstance()
+                        .getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from cliente");
+            while (rs.next()){
+                System.out.println(rs.getString("nombre"));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }*/
+
         launch(args);
     }
 
