@@ -1,0 +1,13 @@
+# 1. Generar fat JAR
+mvn clean package -DskipTests
+
+# 2. Ejecutar con agente (usa la app completa y ciérrala)
+java -agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image -jar target/SysVentasVehiculo-0.1.jar
+
+# 3. Compilar nativo en power shell
+mvn package -Pnative -DskipTests
+
+powershell -ExecutionPolicy Bypass -File fix-subsystem.ps1
+
+
+native-image  -H:Name=sysventas  -H:+ReportExceptionStackTraces  -H:ConfigurationFileDirectories=src/main/resources/META-INF/native-image  -jar target/SysVentasVehiculo-0.1.jar
