@@ -1,0 +1,8 @@
+2026-05-11 09:44:46.916615-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "CLIENTE" ya existe
+Table "CLIENTE" already exists; SQL statement:
+CREATE TABLE `cliente` (`dni` VARCHAR(255) NOT NULL,`nombre` VARCHAR(255) NOT NULL,`telefono` VARCHAR(255) NOT NULL,`email` VARCHAR(255) NOT NULL, PRIMARY KEY(`dni`)) [42101-232]
+2026-05-11 09:53:33.068736-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "CLIENTE" ya existe
+Table "CLIENTE" already exists; SQL statement:
+CREATE TABLE `cliente` (`dni` VARCHAR(255) NOT NULL,`nombre` VARCHAR(255) NOT NULL,`telefono` VARCHAR(255) NOT NULL,`email` VARCHAR(255) NOT NULL, PRIMARY KEY(`dni`)) [42101-232]

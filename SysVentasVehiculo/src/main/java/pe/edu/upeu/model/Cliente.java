@@ -1,13 +1,16 @@
 package pe.edu.upeu.model;
 
-
-import io.micronaut.data.annotation.Id;
-import io.micronaut.data.annotation.MappedEntity;
-import io.micronaut.data.annotation.MappedProperty;
-import io.micronaut.data.model.DataType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
-@MappedEntity(value = "cliente")
+@Builder
+@Entity(name = "cliente")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -15,16 +18,17 @@ import lombok.*;
 @ToString
 public class Cliente {
     @Id
-    @MappedProperty(value = "dni", type = DataType.STRING)
+    @Column(name = "dni")
+    @Size(min = 8, max = 8, message = "El DNI debe contener 8 digitos")
+    @NotBlank(message = "El campo no puede ser vacio o nulo")
     private String dni;
 
-    @MappedProperty(value = "nombre", type = DataType.STRING)
+    @NonNull
+    @NotEmpty(message = "El nombre no puede vacio")
     private String nombre;
 
-    @MappedProperty(value = "telefono", type = DataType.STRING)
     private String telefono;
 
-    @MappedProperty(value = "email", type = DataType.STRING)
+    @Email(message = "El correo no cumple con el formato")
     private String email;
-
 }
