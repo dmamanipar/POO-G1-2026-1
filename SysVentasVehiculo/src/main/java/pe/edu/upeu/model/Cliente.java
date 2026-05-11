@@ -1,6 +1,6 @@
 package pe.edu.upeu.model;
 
-import com.ctc.wstx.shaded.msv.relaxng_datatype.Datatype;
+
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.MappedEntity;
 import io.micronaut.data.annotation.MappedProperty;
