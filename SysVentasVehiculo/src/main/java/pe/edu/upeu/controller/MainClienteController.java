@@ -2,6 +2,7 @@ package pe.edu.upeu.controller;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import jakarta.validation.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,8 +11,13 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import pe.edu.upeu.component.ToltipCustom;
+import pe.edu.upeu.component.ValidadorFormulario;
 import pe.edu.upeu.model.Cliente;
 import pe.edu.upeu.service.ClienteService;
+
+import java.util.Map;
+import java.util.Set;
 
 @Singleton
 public class MainClienteController {
@@ -30,25 +36,40 @@ public class MainClienteController {
     String dni="";
 
     FilteredList<Cliente> filteredData;
+    private ToltipCustom ttc =new ToltipCustom();
+    private ValidadorFormulario<Cliente> validador;
+    private Map<String, TextField> camposUI;
+
     @FXML
     public void initialize(){
         definirColumnas();
         listar();
         botonDesactivar(true);
         agregarEventoSeleccion();
+
+        validador=new ValidadorFormulario<>(initValidator(cs), ttc);
+        camposUI=Map.of(
+                "dni", txtDni,
+                "nombre", txtNombre,
+                "telefono", txtTelefono,
+                "email", txtEmail
+        );
+
         btnActualizar.setOnAction(event->{
-            guardar();
+            if(guardar(true)){
             index=-1;
             limpiar();
             listar();
             botonDesactivar(true);
             btnGuardar.setDisable(false);
+            }
         });
         btnGuardar.setOnAction(e->{
-            guardar();
+            if(guardar(false)){
             index=-1;
             limpiar();
             listar();
+            }
         });
         btnLimpiar.setOnAction(e->{
             limpiar();
@@ -57,6 +78,25 @@ public class MainClienteController {
             btnGuardar.setDisable(false);
         });
         filtrarDatos();
+    }
+
+    private Validator initValidator(ClienteService csx){
+        Configuration<?> config= Validation.byDefaultProvider().configure();
+        config.constraintValidatorFactory(new ConstraintValidatorFactory() {
+            @Override
+            public <T extends ConstraintValidator<?, ?>> T getInstance(Class<T> key) {
+               try {
+                   return key.getDeclaredConstructor().newInstance();
+               } catch (Exception e) {
+                   throw new RuntimeException("No se pudo instanciar:"+key, e);
+               }
+            }
+
+            @Override
+            public void releaseInstance(ConstraintValidator<?, ?> instance) {
+            }
+        } );
+        return config.buildValidatorFactory().getValidator();
     }
 
     void filtrarDatos(){
@@ -112,12 +152,16 @@ public class MainClienteController {
         tableRegCliente.getSelectionModel().clearSelection();
     }
 
-    void guardar(){
+    boolean guardar(boolean esActualizar){
         Cliente c=new Cliente();
         c.setDni(txtDni.getText());
         c.setNombre(txtNombre.getText());
         c.setTelefono(txtTelefono.getText());
         c.setEmail(txtEmail.getText());
+
+        Set<String> excluir=esActualizar?Set.of("DniUnic"):Set.of();
+        if(!validador.validar(c, camposUI, excluir)) return false;
+
         if(index==-1 && !c.getDni().isEmpty()){
            cs.save(c);
         }else{
@@ -130,9 +174,8 @@ public class MainClienteController {
                 c.setDni(dni);
                 cs.update(c);
             }
-
-
         }
+        return true;
     }
     public void agregarEventoSeleccion(){
         tableRegCliente.getSelectionModel().selectedItemProperty()
