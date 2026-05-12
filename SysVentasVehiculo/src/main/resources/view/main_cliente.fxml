@@ -20,7 +20,8 @@
                            </font>
                         </Label>
                         <Label layoutX="409.0" layoutY="16.0" text="Buscar Cliente" />
-                        <TextField fx:id="txtBuscar" layoutX="409.0" layoutY="38.0" />
+                        <TextField fx:id="txtBuscar" layoutX="409.0" layoutY="38.0" onAction="#buscarPorDniNombre" />
+                        <Button fx:id="btnListar" layoutX="564.0" layoutY="38.0" mnemonicParsing="false" text="Listar" />
                      </children>
                      <styleClass>
                         <String fx:value="panel" />

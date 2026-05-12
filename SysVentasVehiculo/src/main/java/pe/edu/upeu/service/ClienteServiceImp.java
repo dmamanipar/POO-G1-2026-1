@@ -31,4 +31,9 @@ public class ClienteServiceImp implements ClienteService {
     public boolean existsById(String id) {
         return repo.existsById(id);
     }
+
+    @Override
+    public List<Cliente> buscarDniNombre(String dni){
+        return repo.findByDniContains(dni);
+    }
 }

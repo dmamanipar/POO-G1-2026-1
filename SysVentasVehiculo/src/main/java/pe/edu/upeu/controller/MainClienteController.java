@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import pe.edu.upeu.component.ToltipCustom;
 import pe.edu.upeu.component.ValidadorFormulario;
+import pe.edu.upeu.component.validation.DniUnicoValidator;
 import pe.edu.upeu.model.Cliente;
 import pe.edu.upeu.service.ClienteService;
 
@@ -31,7 +32,7 @@ public class MainClienteController {
     private TableColumn<Cliente, String> colIdDni, colNombre, colTelefono, colEmail;
 
     @FXML private TextField txtDni, txtNombre, txtTelefono, txtEmail, txtBuscar;
-    @FXML private Button btnGuardar, btnActualizar, btnLimpiar, btnEliminar;
+    @FXML private Button btnGuardar, btnActualizar, btnLimpiar, btnEliminar, btnListar;
     int index=-1;
     String dni="";
 
@@ -77,7 +78,23 @@ public class MainClienteController {
             botonDesactivar(true);
             btnGuardar.setDisable(false);
         });
+        btnListar.setOnAction(e->{
+            listar();
+        });
+
         filtrarDatos();
+    }
+
+    @FXML
+    public void buscarPorDniNombre(ActionEvent e){
+        System.out.println(txtBuscar.getText());
+        colIdDni.setCellValueFactory(cetCell->new SimpleStringProperty(cetCell.getValue().getDni()));
+
+        colNombre.setCellValueFactory(cetCell->new SimpleStringProperty(cetCell.getValue().getNombre()));
+        colTelefono.setCellValueFactory(cetCell->new SimpleStringProperty(cetCell.getValue().getTelefono()));
+        colEmail.setCellValueFactory(cetCell->new SimpleStringProperty(cetCell.getValue().getEmail()));
+        clientes= FXCollections.observableArrayList(cs.buscarDniNombre(txtBuscar.getText()));
+        tableRegCliente.setItems(clientes);
     }
 
     private Validator initValidator(ClienteService csx){
@@ -85,6 +102,12 @@ public class MainClienteController {
         config.constraintValidatorFactory(new ConstraintValidatorFactory() {
             @Override
             public <T extends ConstraintValidator<?, ?>> T getInstance(Class<T> key) {
+               if(key== DniUnicoValidator.class){
+                   DniUnicoValidator v=new DniUnicoValidator();
+                   v.initialize(csx);
+                   return key.cast(v);
+               }
+
                try {
                    return key.getDeclaredConstructor().newInstance();
                } catch (Exception e) {
@@ -150,6 +173,7 @@ public class MainClienteController {
         txtTelefono.setText("");
         txtEmail.setText("");
         tableRegCliente.getSelectionModel().clearSelection();
+        camposUI.values().forEach(ttc::limpiarCampo);
     }
 
     boolean guardar(boolean esActualizar){

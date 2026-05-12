@@ -7,4 +7,5 @@ public interface ClienteService {
     List<Cliente> findAll();
     void delete(String id);
     boolean existsById(String id);
+    List<Cliente> buscarDniNombre(String dni);
 }
