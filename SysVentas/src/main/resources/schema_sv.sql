@@ -227,3 +227,12 @@ ALTER TABLE upeu_venta_detalle
     ADD CONSTRAINT IF NOT EXISTS upeu_producto_venta_detalle_fk
     FOREIGN KEY (id_producto)
     REFERENCES upeu_producto (id_producto);
+
+
+MERGE INTO upeu_perfil (id_perfil, nombre, codigo)
+    KEY(id_perfil) VALUES (1, 'Root', 'ROOT'),
+    (2, 'Administrador', 'ADM'),
+    (3, 'Reporte', 'REP');
+
+MERGE INTO upeu_usuario (id_usuario, usuario, clave, estado, id_perfil)
+    KEY(id_usuario) VALUES (1, 'admin', 'admin123', 'ACTIVO', 1);
