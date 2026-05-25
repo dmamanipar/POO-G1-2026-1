@@ -1,6 +1,11 @@
 package pe.edu.upeu.sysventas.config;
 
 import pe.edu.upeu.sysventas.controller.*;
+import pe.edu.upeu.sysventas.repository.UsuarioRepository;
+import pe.edu.upeu.sysventas.service.IMenuMenuItemDao;
+import pe.edu.upeu.sysventas.service.IUsuarioService;
+import pe.edu.upeu.sysventas.service.impl.MenuMenuItemDaoImp;
+import pe.edu.upeu.sysventas.service.impl.UsuarioServiceImp;
 import pe.edu.upeu.sysventas.utils.ConsultaDNI;
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -31,6 +36,8 @@ public class AppContext {
     // No reciben dependencias: solo necesitan la conexión (DatabaseConfig).
     private void registrarRepositorios() {
         //registrar(CategoriaRepository.class, new CategoriaRepository());
+        registrar(UsuarioRepository.class, new UsuarioRepository());
+
     }
 
     // CAPA 2 — SERVICIOS
@@ -38,6 +45,9 @@ public class AppContext {
     // Usamos getBean() para buscarlo en el directorio: no creamos nada nuevo.
     private void registrarServicios() {
         registrar(ConsultaDNI.class,          new ConsultaDNI());
+        registrar(IMenuMenuItemDao.class, new MenuMenuItemDaoImp());
+        registrar(IUsuarioService.class, new
+                UsuarioServiceImp(getBean(UsuarioRepository.class)));
     }
 
     // CAPA 3 — CONTROLADORES JavaFX
