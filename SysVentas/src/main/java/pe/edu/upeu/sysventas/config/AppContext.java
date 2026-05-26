@@ -46,8 +46,7 @@ public class AppContext {
     private void registrarServicios() {
         registrar(ConsultaDNI.class,          new ConsultaDNI());
         registrar(IMenuMenuItemDao.class, new MenuMenuItemDaoImp());
-        registrar(IUsuarioService.class, new
-                UsuarioServiceImp(getBean(UsuarioRepository.class)));
+        registrar(IUsuarioService.class, new UsuarioServiceImp(getBean(UsuarioRepository.class)));
     }
 
     // CAPA 3 — CONTROLADORES JavaFX
@@ -55,8 +54,9 @@ public class AppContext {
     // El FXMLLoader los busca aquí a través de setControllerFactory().
     private void registrarControladores() {
         //registrar(LoginController.class, new LoginController(getBean(IUsuarioService.class)));
-        registrar(LoginController.class, new LoginController());
-
+        registrar(LoginController.class, new LoginController(getBean(IUsuarioService.class)));
+        registrar(MainGuiController.class, new MainGuiController(getBean(IMenuMenuItemDao.class)));
+        registrar(MainProductoController.class, new MainProductoController());
     }
 
     // API del contenedor — estos dos métodos son todo lo que hace la DI

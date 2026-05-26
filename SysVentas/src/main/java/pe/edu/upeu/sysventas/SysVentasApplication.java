@@ -24,6 +24,7 @@ public class SysVentasApplication  extends Application {
     public void start(Stage stage) throws Exception {
         Scene scene = new Scene(parent);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 }

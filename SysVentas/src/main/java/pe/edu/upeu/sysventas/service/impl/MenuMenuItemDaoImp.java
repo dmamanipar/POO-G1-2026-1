@@ -15,7 +15,8 @@ public class MenuMenuItemDaoImp implements IMenuMenuItemDao {
                 idioma.getProperty("menu.nombre.principal"),
                 idioma.getProperty("menuitem.nombre.salir"), "Salir", "S"));
         lista.add(new MenuMenuItenTO("miproducto", "/view/main_producto.fxml",
-                "Producto", "Adm. Producto", "Gestión Productos", "T"));
+                idioma.getProperty("menu.nombre.producto"), idioma.getProperty("menuitem.nombre.producto"), "Gestión Productos", "T"));
+
         lista.add(new MenuMenuItenTO("micliente", "/view/main_producto.fxml", //cambiar por main_cliente
                 "Venta", "Reg. Cliente", "Gestionar Cliente", "T"));
         lista.add(new MenuMenuItenTO("miventa", "/view/main_venta.fxml",
