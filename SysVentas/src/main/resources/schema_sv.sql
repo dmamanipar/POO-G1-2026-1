@@ -236,3 +236,9 @@ MERGE INTO upeu_perfil (id_perfil, nombre, codigo)
 
 MERGE INTO upeu_usuario (id_usuario, usuario, clave, estado, id_perfil)
     KEY(id_usuario) VALUES (1, 'admin', 'admin123', 'ACTIVO', 1);
+
+MERGE INTO upeu_categoria(id_categoria, nombre) KEY(id_categoria) VALUES(1,'Zapallizas');
+
+MERGE INTO upeu_marca(id_marca, nombre) KEY(id_marca) VALUES(1,'Adidas');
+
+MERGE INTO upeu_unid_medida(id_unidad, nombre_medida) KEY(id_unidad) VALUES(1, 'Unidad');

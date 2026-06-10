@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class ComboBoxOption {
     String key;
     String value;//etiqueta=nombre
+
     @Override
     public String toString()
     {
