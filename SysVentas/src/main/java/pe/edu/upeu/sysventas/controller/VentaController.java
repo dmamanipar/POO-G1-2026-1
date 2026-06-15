@@ -224,7 +224,7 @@ public class VentaController {
     public void listar(){
         tableView.getItems().clear();
         List<VentCarrito> lista=daoC.listaCarritoCliente(dniRuc.getText());
-        double impoTotal = 0, igv = 0;
+        double impoTotal = 0;
         for (VentCarrito dato: lista){
             impoTotal += Double.parseDouble(String.valueOf(dato.getPtotal()));
         }
