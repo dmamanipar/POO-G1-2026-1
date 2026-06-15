@@ -41,7 +41,11 @@ public class AppContext {
         registrar(UnidadMedidaRepository.class,  new UnidadMedidaRepository());
         registrar(ProductoRepository.class,      new ProductoRepository());
 
-
+        registrar(PerfilRepository.class,        new PerfilRepository());
+        registrar(ClienteRepository.class,       new ClienteRepository());
+        registrar(VentCarritoRepository.class,   new VentCarritoRepository());
+        registrar(VentaDetalleRepository.class,  new VentaDetalleRepository());
+        registrar(VentaRepository.class,         new VentaRepository());
     }
 
     // CAPA 2 — SERVICIOS
@@ -56,6 +60,13 @@ public class AppContext {
         registrar(IMarcaService.class,        new MarcaServiceImp(       getBean(MarcaRepository.class)));
         registrar(ProductoIService.class,     new ProductoServiceImp(    getBean(ProductoRepository.class)));
         registrar(IUnidadMedidaService.class, new UnidadMedidaServiceImp(getBean(UnidadMedidaRepository.class)));
+
+
+        DataSource ds = DatabaseConfig.getDataSource();
+        registrar(IClienteService.class,      new ClienteServiceImp(     getBean(ClienteRepository.class)));
+        registrar(IVentaCarritoService.class, new VentaCarritoServiceImp(getBean(VentCarritoRepository.class)));
+        registrar(IVentaDetalleService.class, new VentaDetalleServiceImp(getBean(VentaDetalleRepository.class)));
+        registrar(IVentaService.class,        new VentaServiceImp(       getBean(VentaRepository.class), ds));
     }
 
     // CAPA 3 — CONTROLADORES JavaFX
@@ -74,7 +85,15 @@ public class AppContext {
                         getBean(ProductoIService.class),
                         getBean(IUnidadMedidaService.class)));
 
-        registrar(VentaController.class, new VentaController());
+        registrar(VentaController.class,
+                new VentaController(
+                        getBean(ProductoIService.class),
+                        getBean(IClienteService.class),
+                        getBean(IVentaCarritoService.class),
+                        getBean(IUsuarioService.class),
+                        getBean(IVentaService.class),
+                        getBean(IVentaDetalleService.class),
+                        getBean(ConsultaDNI.class)));
     }
 
     // API del contenedor — estos dos métodos son todo lo que hace la DI

@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,10 +16,10 @@ public class Venta {
     private Double preciobase;
     private Double igv;
     private Double preciototal;
-    private String dniruc;
+    private Cliente dniruc;
     private Usuario idUsuario;
     private String numDoc;
-    private LocalDate fechaGener;
+    private LocalDateTime fechaGener;
     private String serie;
     private String tipoDoc;
     private List<VentaDetalle> detalleVenta;
