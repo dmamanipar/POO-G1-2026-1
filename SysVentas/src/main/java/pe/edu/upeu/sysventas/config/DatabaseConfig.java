@@ -2,6 +2,7 @@ package pe.edu.upeu.sysventas.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.h2.tools.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,7 @@ public class DatabaseConfig {
 
     private static final Logger log = LoggerFactory.getLogger(DatabaseConfig.class);
     private static HikariDataSource dataSource;
+    private static Server h2Server;
 
     private DatabaseConfig() {}
 
@@ -43,6 +45,22 @@ public class DatabaseConfig {
         }
 
         Properties props = loadProperties("application.properties");
+
+        boolean h2ServerEnabled = Boolean.parseBoolean(props.getProperty("db.h2server.enabled", "false"));
+        if (h2ServerEnabled) {
+            String port = props.getProperty("db.h2server.port", "9092");
+            try {
+                h2Server = Server.createTcpServer(
+                        "-tcp",
+                        "-tcpAllowOthers",
+                        "-tcpPort", port
+                ).start();
+                log.info("H2 TCP Server iniciado en puerto {}", port);
+            } catch (SQLException e) {
+                throw new RuntimeException("No se pudo iniciar H2 TCP Server", e);
+            }
+        }
+
 
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(props.getProperty("db.url"));
@@ -96,6 +114,10 @@ public class DatabaseConfig {
         if (dataSource != null && !dataSource.isClosed()) {
             log.info("Cerrando HikariCP pool...");
             dataSource.close();
+        }
+        if (h2Server != null && h2Server.isRunning(false)) {
+            log.info("Deteniendo H2 TCP Server...");
+            h2Server.stop();
         }
     }
 
