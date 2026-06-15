@@ -1,5 +1,5 @@
 package pe.edu.upeu.sysventas.components;
-
+/*
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
@@ -42,3 +42,4 @@ public class ReportAlert {
         });
     }
 }
+*/

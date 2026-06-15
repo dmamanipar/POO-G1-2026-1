@@ -1,5 +1,5 @@
 package pe.edu.upeu.sysventas.components;
-
+/*
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -60,3 +60,4 @@ public class ReportDialog {
 
     }
 }
+*/
