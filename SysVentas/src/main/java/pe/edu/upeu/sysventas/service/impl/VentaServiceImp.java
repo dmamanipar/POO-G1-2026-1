@@ -65,7 +65,7 @@ public class VentaServiceImp extends CrudGenericoServiceImp<Venta, Long>
         b.setTipoDocCliente(venta.getDniruc().getTipoDocumento().name());
         b.setNroDocCliente(venta.getDniruc().getDniruc());
         b.setNombreCliente(venta.getDniruc().getNombres());
-        b.setDireccionCliente("Av. Sangalli 1234");
+        b.setDireccionCliente(venta.getDniruc().getDireccion());
 
         List<ItemComprobante> items = new ArrayList<>();
 

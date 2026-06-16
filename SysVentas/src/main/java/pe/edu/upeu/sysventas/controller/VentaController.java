@@ -423,6 +423,7 @@ public class VentaController {
             //Datos del cliente
             escpos.writeLF(normal, "Cliente: "+vt.getDniruc().getNombres());
             escpos.writeLF(normal, "DNI: "+vt.getDniruc().getDniruc());
+            escpos.writeLF(normal, "Direccion: "+vt.getDniruc().getDireccion());
             escpos.writeLF(normal, "Fecha: "+vt.getFechaGener()+"");
             escpos.writeLF(normal, "--------------------------------");
             //Detalle
