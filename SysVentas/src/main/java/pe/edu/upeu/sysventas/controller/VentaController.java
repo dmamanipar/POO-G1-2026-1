@@ -129,6 +129,8 @@ public class VentaController {
                 System.out.println(lastCliente.getNameDysplay());
                 razonSocial.setText(lastCliente.getNameDysplay());
                 dniRuc.setText(lastCliente.getIdx());
+                String[] tempVal=lastCliente.getOtherData().split(":");
+                txtDireccion.setText(tempVal[1]);
                 listar();
             }else {
                 btnRegCliente.setDisable(true);

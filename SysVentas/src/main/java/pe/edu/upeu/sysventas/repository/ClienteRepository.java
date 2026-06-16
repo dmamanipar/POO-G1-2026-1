@@ -19,6 +19,7 @@ public class ClienteRepository extends AbstractJpaRepository<Cliente, String> {
                 .nombres(rs.getString("nombres"))
                 .repLegal(rs.getString("rep_legal"))
                 .tipoDocumento(TipoDocumento.valueOf(rs.getString("tipo_documento")))
+                .direccion(rs.getString("direccion"))
                 .build();
     }
     @Override
