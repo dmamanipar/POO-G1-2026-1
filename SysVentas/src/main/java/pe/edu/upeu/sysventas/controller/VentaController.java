@@ -121,7 +121,7 @@ public class VentaController {
         entriesC.addAll(cs.listAutoCompletCliente());
     }
 
-    public void autoCompletarCliente(){
+    public void autoCompletarCliente(){ 
         actfC=new AutoCompleteTextField<>(entriesC, autocompCliente);
         autocompCliente.setOnKeyReleased(e->{
             lastCliente=(ModeloDataAutocomplet) actfC.getLastSelectedObject();
@@ -345,6 +345,7 @@ public class VentaController {
                           //  ReportAlert reportAlert=new ReportAlert(jasperPrint);
                            // reportAlert.show();
                         //});
+                    limpiarForm();
                     print(Long.parseLong(String.valueOf(idX.getIdVenta())));
 
                 }else{
@@ -457,6 +458,15 @@ public class VentaController {
         } catch (IOException e) {
             System.err.println("Error al inicializar la impresora: " + e.getMessage());
         }
+    }
+
+
+    public void limpiarForm(){
+        autocompCliente.setText("");
+        dniRuc.setText("");
+        razonSocial.setText("");
+        txtDireccion.setText("");
+
     }
 
 }
